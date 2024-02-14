@@ -1,7 +1,6 @@
+import tomllib
 from pathlib import Path
 from typing import Any, Union
-
-import toml
 
 from .benchmark import BenchmarkConfig
 from .data import DataConfig
@@ -15,8 +14,8 @@ class Config:
         self.parse_config()
 
     def load_config(self) -> None:
-        with open(self._fpath) as f:
-            self._config = toml.load(f)
+        with open(self._fpath, "rb") as f:
+            self._config = tomllib.load(f)
 
     def parse_config(self) -> None:
         self.data = DataConfig(self._config["data"])

@@ -1,6 +1,6 @@
 from enum import Enum
 
-import toml
+import tomli_w
 
 
 class ConfigBaseClass:
@@ -17,7 +17,7 @@ class ConfigBaseClass:
         return config_dict
 
     def __str__(self) -> str:
-        return toml.dumps(self._to_dict())
+        return tomli_w.dumps(self._to_dict())
 
     def __repr__(self) -> str:
         return str(self.__dict__)

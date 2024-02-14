@@ -2,13 +2,13 @@
 name = "iobench"
 version = "0.1.0"
 description = "Distributed IO benchmark that supports s3 (MinIO) and POSIX"
-authors = ["Michael Mao"]
+authors = ["Michael Mao <michael.mao99@gmail.com>"]
 license = "MIT"
 readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.11"
-pyyaml = "^6.0.1"
+toml = "^0.10.2"
 
 
 [build-system]

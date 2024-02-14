@@ -1,16 +1,11 @@
 from pathlib import Path
 from typing import Any, Union
 
-from yaml import load
+import toml
 
 from .benchmark import BenchmarkConfig
 from .data import DataConfig
 from .io import IOConfig
-
-try:
-    from yaml import CLoader as Loader
-except ImportError:
-    from yaml import Loader
 
 
 class Config:
@@ -21,7 +16,7 @@ class Config:
 
     def load_config(self) -> None:
         with open(self._fpath) as f:
-            self._config = load(f.read(), Loader=Loader)
+            self._config = toml.load(f)
 
     def parse_config(self) -> None:
         self.data = DataConfig(self._config["data"])

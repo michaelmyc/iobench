@@ -1,12 +1,7 @@
 from enum import Enum
 from typing import Union
 
-from yaml import dump
-
-try:
-    from yaml import CDumper as Dumper
-except ImportError:
-    from yaml import Dumper
+from iobench.config.base import ConfigBaseClass
 
 
 class IOType(str, Enum):
@@ -20,7 +15,7 @@ class IOType(str, Enum):
         return self.value
 
 
-class IOConfig:
+class IOConfig(ConfigBaseClass):
     def __init__(self, config: dict) -> None:
         self.io_type: IOType = IOType(config.get("io_type", "File"))
         self.io_config: Union[S3Config, FileConfig, None] = None
@@ -28,13 +23,6 @@ class IOConfig:
             self.io_config = S3Config(config.get("s3_config", {}))
         elif self.io_type is IOType.File:
             self.io_config = FileConfig(config.get("file_config", {}))
-
-    def __str__(self) -> str:
-        str_dict = {k: str(v) for k, v in self.__dict__.items()}
-        return dump(str_dict, allow_unicode=True, Dumper=Dumper)
-
-    def __repr__(self) -> str:
-        return str(self.__dict__)
 
 
 class S3Config:
@@ -54,7 +42,7 @@ class S3Config:
         pass
 
 
-class FileConfig:
+class FileConfig(ConfigBaseClass):
     def __init__(self, config: dict) -> None:
         # TODO
         pass

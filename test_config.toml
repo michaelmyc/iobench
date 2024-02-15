@@ -1,5 +1,11 @@
 [io]
+io_type = "File"
+
+[io.file_config]
+path = "/tmp"
 
 [benchmark]
 
 [data]
+
+[concurrency]

@@ -1,14 +1,16 @@
 import tomllib
+from os import PathLike
 from pathlib import Path
 from typing import Any, Union
 
-from .benchmark import BenchmarkConfig
-from .data import DataConfig
-from .io import IOConfig
+from iobench.config.benchmark import BenchmarkConfig
+from iobench.config.concurrency import ConcurrencyConfig
+from iobench.config.data import DataConfig
+from iobench.config.io import IOConfig
 
 
 class Config:
-    def __init__(self, fpath: Union[Path, str]) -> None:
+    def __init__(self, fpath: Union[PathLike, bytes, str]) -> None:
         self._fpath = Path(fpath)
         self.load_config()
         self.parse_config()
@@ -21,15 +23,18 @@ class Config:
         self.data = DataConfig(self._config["data"])
         self.io = IOConfig(self._config["io"])
         self.benchmark = BenchmarkConfig(self._config["benchmark"])
+        self.concurrency = ConcurrencyConfig(self._config["concurrency"])
 
     def __str__(self) -> str:
         return "\n".join(
             [
-                "======== Data ========",
+                "===== Concurrency =====",
+                str(self.concurrency),
+                "========= Data ========",
                 str(self.data),
-                "========= IO =========",
+                "========== IO =========",
                 str(self.io),
-                "====== Benchmark =====",
+                "====== Benchmark ======",
                 str(self.benchmark),
             ]
         )

@@ -9,7 +9,16 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.11"
 tomli-w = "^1.0.0"
+tqdm = "^4.66.2"
+minio = "^7.2.4"
+s3fs = "^2024.2.0"
+paramiko = "^3.4.0"
 
+
+[[tool.poetry.source]]
+name = "mirrors"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple/"
+priority = "default"
 
 [build-system]
 requires = ["poetry-core"]

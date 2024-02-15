@@ -3,6 +3,14 @@ from enum import Enum
 import tomli_w
 
 
+class StrEnum(str, Enum):
+    def __repr__(self) -> str:
+        return self.value
+
+    def __str__(self) -> str:
+        return self.value
+
+
 class ConfigBaseClass:
     def _to_dict(self) -> dict:
         config_dict = {}

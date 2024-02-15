@@ -1,34 +1,36 @@
-from enum import Enum
 from typing import Union
 
-from iobench.config.base import ConfigBaseClass
+from iobench.config.base import ConfigBaseClass, StrEnum
 
 
-class IOType(str, Enum):
+class IOType(StrEnum):
     File = "File"
     S3 = "S3"
-
-    def __repr__(self) -> str:
-        return self.value
-
-    def __str__(self) -> str:
-        return self.value
 
 
 class IOConfig(ConfigBaseClass):
     def __init__(self, config: dict) -> None:
-        self.io_type: IOType = IOType(config.get("io_type", "File"))
+        self.io_type: IOType = IOType(config["io_type"])
         self.io_config: Union[S3Config, FileConfig, None] = None
         if self.io_type is IOType.S3:
-            self.io_config = S3Config(config.get("s3_config", {}))
+            self.io_config = S3Config(config["s3_config"])
         elif self.io_type is IOType.File:
-            self.io_config = FileConfig(config.get("file_config", {}))
+            self.io_config = FileConfig(config["file_config"])
 
 
 class S3Config:
     def __init__(self, config: dict) -> None:
+        assert "endpoint" in config
+        assert "bucket" in config
         assert "user" in config or "access_key" in config
         assert "password" in config or "secret_key" in config
+
+        self.library = config.get("library", "minio")
+        self.use_ssl = config.get("use_ssl", False)
+        self.endpoint = config["endpoint"]
+        self.port = config.get("port", 9000)
+        self.bucket = config["bucket"]
+        self.prefix = config.get("prefix", "")
         if "user" in config:
             self.access_key = config["user"]
         else:
@@ -38,11 +40,8 @@ class S3Config:
         else:
             self.secret_key = config["secret_key"]
 
-        # TODO
-        pass
-
 
 class FileConfig(ConfigBaseClass):
     def __init__(self, config: dict) -> None:
-        # TODO
-        pass
+        assert "path" in config
+        self.path = config["path"]

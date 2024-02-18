@@ -7,8 +7,8 @@ from iobench.parallel.base import ParallelExecutor, ParallelTask
 
 
 class MultiprocessExecutor(ParallelExecutor):
-    def __init__(self, max_concurrency: int = 16, disable_tqdm: bool = False) -> None:
-        self.max_concurrency = max_concurrency
+    def __init__(self, concurrency: int = 16, disable_tqdm: bool = False) -> None:
+        self.concurrency = concurrency
         self.disable_tqdm = disable_tqdm
         self.tasks = []
 
@@ -17,7 +17,7 @@ class MultiprocessExecutor(ParallelExecutor):
 
     def run_tasks(self) -> List[Any]:
         results = []
-        with multiprocessing.Pool(self.max_concurrency) as p:
+        with multiprocessing.Pool(self.concurrency) as p:
             with tqdm(total=len(self.tasks), disable=self.disable_tqdm) as pbar:
                 for task in self.tasks:
                     result = p.apply_async(

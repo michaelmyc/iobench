@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package IOBench;
+
+service IOBench {
+  rpc Heartbeat(Empty) returns (HeartbeatResponse);
+  rpc Communicate(stream ClientMessage) returns (stream ServerMessage);
+}
+
+message ServerMessage {
+  string result = 1;
+}
+
+message ClientMessage {
+  string data = 1;
+}
+
+message HeartbeatResponse {
+  bool terminate = 1;
+}
+
+message Empty {}

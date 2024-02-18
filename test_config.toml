@@ -9,3 +9,4 @@ path = "/tmp"
 [data]
 
 [concurrency]
+script_path = "/Users/michaelmao/git/iobench/.venv/bin/iobench"

@@ -5,6 +5,7 @@ description = "Distributed IO benchmark that supports s3 (MinIO) and POSIX"
 authors = ["Michael Mao <michael.mao99@gmail.com>"]
 license = "MIT"
 readme = "README.md"
+repository = "https://github.com/michaelmyc/iobench"
 
 [tool.poetry.dependencies]
 python = "^3.11"
@@ -13,6 +14,8 @@ tqdm = "^4.66.2"
 minio = "^7.2.4"
 s3fs = "^2024.2.0"
 paramiko = "^3.4.0"
+grpcio = "^1.60.1"
+numpy = "^1.26.4"
 
 
 [[tool.poetry.source]]
@@ -20,6 +23,13 @@ name = "mirrors"
 url = "https://pypi.tuna.tsinghua.edu.cn/simple/"
 priority = "default"
 
+
+[tool.poetry.group.dev.dependencies]
+grpcio-tools = "^1.60.1"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+iobench = "iobench.console:run"

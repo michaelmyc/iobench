@@ -11,7 +11,7 @@ class ParallelTask:
 
 class ParallelExecutor(metaclass=ABCMeta):
     @abstractmethod
-    def __init__(self, max_concurrency: int, disable_tqdm: bool) -> None:
+    def __init__(self, concurrency: int, disable_tqdm: bool) -> None:
         pass
 
     @abstractmethod

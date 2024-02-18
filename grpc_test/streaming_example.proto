@@ -1,0 +1,15 @@
+// streaming_example.proto
+
+syntax = "proto3";
+
+service StreamingExample {
+  rpc BidirectionalStream(stream Request) returns (stream Response);
+}
+
+message Request {
+  string message = 1;
+}
+
+message Response {
+  string message = 1;
+}

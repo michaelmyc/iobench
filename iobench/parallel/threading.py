@@ -7,8 +7,8 @@ from iobench.parallel.base import ParallelExecutor, ParallelTask
 
 
 class ThreadedExecutor(ParallelExecutor):
-    def __init__(self, max_concurrency: int = 16, disable_tqdm: bool = False) -> None:
-        self.sem = threading.Semaphore(max_concurrency)
+    def __init__(self, concurrency: int = 16, disable_tqdm: bool = False) -> None:
+        self.sem = threading.Semaphore(concurrency)
         self.lock = threading.Lock()
         self.disable_tqdm = disable_tqdm
         self.threads = []

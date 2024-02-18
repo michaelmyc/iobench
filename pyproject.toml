@@ -16,6 +16,7 @@ s3fs = "^2024.2.0"
 paramiko = "^3.4.0"
 grpcio = "^1.60.1"
 numpy = "^1.26.4"
+isodate = "^0.6.1"
 
 
 [[tool.poetry.source]]

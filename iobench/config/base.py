@@ -2,6 +2,8 @@ from enum import Enum
 
 import tomli_w
 
+from iobench.data.generator import DataGenerationConfig
+
 
 class StrEnum(str, Enum):
     def __repr__(self) -> str:
@@ -19,6 +21,12 @@ class ConfigBaseClass:
                 config_dict[k] = v._to_dict()
             elif isinstance(v, Enum):
                 config_dict[k] = v.value
+            elif (
+                isinstance(v, list)
+                and len(v) > 0
+                and isinstance(v[0], DataGenerationConfig)
+            ):
+                config_dict[k] = [str(x) for x in v]
             else:
                 config_dict[k] = v
 

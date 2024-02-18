@@ -44,7 +44,7 @@ class Unit:
     prefix: UnitPrefix
     base: BaseUnit
 
-    def to_bytes(self):
+    def to_bytes(self) -> float:
         return self.prefix.value * self.base.value
 
     @classmethod
@@ -77,8 +77,11 @@ class Unit:
 class SizeUnit(Unit):
     @staticmethod
     def from_string(s: str) -> Self:
-        base = BaseUnit(s[-1])
-        prefix = UnitPrefix(s[:-1])
+        base = BaseUnit[s[-1]]
+        try:
+            prefix = DecimalUnitPrefix[s[:-1]]
+        except:
+            prefix = BinaryUnitPrefix[s[:-1]]
         return SizeUnit(prefix, base)
 
     def __repr__(self) -> str:
@@ -92,7 +95,10 @@ class PerSecondSpeedUnit(Unit):
     @staticmethod
     def from_string(s: str) -> Self:
         base = BaseUnit(s[-3])
-        prefix = UnitPrefix(s[:-3])
+        try:
+            prefix = DecimalUnitPrefix[s[:-3]]
+        except:
+            prefix = BinaryUnitPrefix[s[:-3]]
         return SizeUnit(prefix, base)
 
     def __repr__(self) -> str:
@@ -112,7 +118,7 @@ class ValueWithUnit:
         self.amount = amount
         self.unit = unit
 
-    def to_bytes(self):
+    def to_bytes(self) -> float:
         return self.amount * self.unit.to_bytes()
 
     @classmethod
@@ -122,7 +128,7 @@ class ValueWithUnit:
 
     @staticmethod
     def _parse_value(s: str) -> float:
-        return re.findall("(\d+(?:\.\d+)?)", s)[0]
+        return float(re.findall("(\d+(?:\.\d+)?)", s)[0])
 
     @staticmethod
     def _parse_unit_str(s: str) -> str:

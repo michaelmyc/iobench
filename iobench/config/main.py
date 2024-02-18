@@ -1,7 +1,7 @@
 import tomllib
 from os import PathLike
 from pathlib import Path
-from typing import Any, Union
+from typing import Union
 
 from iobench.config.benchmark import BenchmarkConfig
 from iobench.config.concurrency import ConcurrencyConfig
